@@ -1,46 +1,30 @@
-﻿// Дан массив. Найдите МЕХ массива - минимальный отсутствующий элемент
+﻿// Задайте двумерный массив размером mxn, заполненный случайными целыми числами
 
-void PrintArray(int[] array)
+int[,] GetArrayRandom(int rows, int cols, int minValue = 0, int maxValue = 10)
 {
-    System.Console.WriteLine(string.Join(" ", array));
-}
-int Max (int[] array)
-{
-    int max = 0;
-    for(int i = 0; i < array.Length; i++)
+    int[,] array = new int[rows, cols];
+    var rnd = new Random();
+    
+    for(int i = 0; i < array.GetLength(0); i++)
     {
-        if(max<array[i])
+        for(int j = 0; j < array.GetLength(1); j++)
         {
-            max = array[i];
+            array[i,j] = rnd.Next(minValue, maxValue + 1);
         }
     }
-    return max;
+    return array;
 }
-
-int MinExcluded (int[] array, int mex, int max)
+void PrintArray(int[,] array)
 {
-    int temp = 0;
-    while(temp <= max)
+    for(int i = 0; i < array.GetLength(0); i++)
     {
-        for(int i = 0; i < array.Length; i++)
+        for(int j = 0; j < array.GetLength(1); j++)
         {
-            if(array[i] == mex)
-            {
-                mex = temp;
-            } 
+            Console.Write($"{array[i,j]} ");
         }
-        temp++;
+        Console.WriteLine();
     }
-    if(mex == max) mex = max+1;
-    return mex;
 }
 
-System.Console.WriteLine("Введите массив через ',': ");
-string[] strings = Console.ReadLine()!.Split(',');
-int[] array = new int[strings.Length];
-for(int i = 0; i < strings.Length; i++)
-{
-    array[i] = int.Parse(strings[i]);
-}
+int [,] array = GetArrayRandom(3, 4);
 PrintArray(array);
-System.Console.WriteLine($"MEX = {MinExcluded (array, 0, Max(array))}");
